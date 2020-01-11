@@ -14,6 +14,7 @@ game = {
 }
 
 players = {}
+blacklists = {'745','738', '688'}
 
 -- tp the player to the loby
 function OnPlayerJoin(player)
@@ -51,7 +52,7 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-	SetPlayerSpawnLocation(player, 125773.000000, 80246.000000, 1645.000000, 90.0)
+	SetPlayerSpawnLocation(player, -78409.382812, -165535.0625, 3218.9055175781, 0)
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
 
@@ -61,8 +62,12 @@ function GameEnd()
 end
 
 AddEvent("OnPackageStart", function()
+    LoadMapFromIni("packages/ogk_gg/maps/western.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock1.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock2.ini")
+    LoadMapFromIni("packages/ogk_gg/maps/western_doorblock3.ini")
+    
     -- check if game is on and do something
-
     game.state = "lobby"
 
 --    Delay(60000, function()
@@ -91,7 +96,7 @@ AddEvent("OnPackageStart", function()
 
         for k, v in ipairs(game.propsTeams) do 
 
-            SetPlayerLocation(k, 125773.000000 + 500, 80246.000000, 1645.000000, 90.0)
+            SetPlayerLocation(k, -73164.578125, -163825.953425, 3341.1821289063, 0)
             AddPlayerChat(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!")
             print('Is on props team:' .. GetPlayerName(k))
         end
@@ -107,22 +112,31 @@ end)
 AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     local x, y, z = GetPlayerLocation(player)
     print("Getting player locaiton")
-    
-    Delay(1000, function()
-        if(players[player].attached == true) then
-            SetObjectDetached(players[player].object)
 
-                      
-            AddPlayerChat(player, "test removed")
-            players[player].attached = false
-            players[player].object = nil
-            CallRemoteEvent(player, "PlayerHider", player, false)
-        else
-            SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0, 0, 0, 0)
-            players[player].attached = true
-            players[player].object = objectt
-            CallRemoteEvent(player, "PlayerHider", player, true)
+  
+    if(players[player].attached == true) then
+        SetObjectDetached(players[player].object)
+
+                    
+        AddPlayerChat(player, "test removed")
+        players[player].attached = false
+        players[player].object = nil
+
+        local x,y,z = GetPlayerLocation(player)
+        SetPlayerLocation(player, x, y, z + 10)
+        CallRemoteEvent(player, "PlayerHider", player, false)
+    else
+        if(objectt == 0) then return end
+        for _, v in ipairs(blacklists) do
+            if(objectt == v) then
+                AddPlayerChat(player, "Vous ne pouvez pas devenir cette object !")
+                return
+            end
         end
-    end)
+        SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0, 0, 0, 0)
+        players[player].attached = true
+        players[player].object = objectt
+        CallRemoteEvent(player, "PlayerHider", player, true)
+    end
     print('player are now object:' .. objectt)
 end)

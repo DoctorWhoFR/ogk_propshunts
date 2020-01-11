@@ -41,11 +41,9 @@ end)
 function OnKeyPress(key)
     if key == "E" then
         local object = GetPickupLookingAt()
-        Delay(2000, function()
-            AddPlayerChat("Getting the "..object)
-            CallRemoteEvent("AttachPlayerObject", object)
-            AddPlayerChat("You have pressed TAB!")
-        end)
+        AddPlayerChat("Getting the "..object)
+        CallRemoteEvent("AttachPlayerObject", object)
+        AddPlayerChat("You have pressed TAB!")
     end
 end
 AddEvent("OnKeyPress", OnKeyPress)
