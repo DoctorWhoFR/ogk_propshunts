@@ -52,3 +52,7 @@ AddRemoteEvent("PlayerHider", function(player, status, object)
     GetPlayerActor(player):SetActorHiddenInGame(status)
     GetObjectActor(object):SetCollisionEnabled(true)
 end)
+
+AddEvent("OnScriptError", function(message)
+    AddPlayerChat(message)
+end)
