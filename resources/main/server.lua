@@ -44,7 +44,7 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-    SetPlayerSpawnLocation(player,  18483.21875+200, 140415.296875, 1556.962, 160)
+    SetPlayerSpawnLocation(player,  18483.21875, 140415.296875, 1556.962+100, 160)
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
 
@@ -83,6 +83,7 @@ end
 
  -- function for start game
 function StartTheGame()
+    
     if(#players >= 2) then
         print('game start')
         AddPlayerChatAll("Game start !")
@@ -95,9 +96,9 @@ function StartTheGame()
             OGK.SendPlayerMessage(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !")
             SetPlayerWeapon(k, 5, 500, true, 1, true)
 
-            Delay(60000, function()
+            Delay(5000, function()
                 SetPlayerDimension(k, 0)
-                SetPlayerLocation(k, 125773.000000+1000, 80246.000000, 1645.000000 , 90.0)
+                SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
                 print('Is on hunts team:' .. GetPlayerName(player))
                 AddPlayerChat(k, "Vous devez trouvez les props.")
             end)
@@ -110,7 +111,37 @@ function StartTheGame()
             
             print('Is on props team:' .. GetPlayerName(k))
         end
+
+        AddPlayerChatAll('Props win after 5 minutes!')
+        Delay(15000, function()
+            AddPlayerChatAll('End of the game in 2.5 minutes!')
+        end)
+        Delay(60000, function() 
+            AddPlayerChatAll('props wins !!!!!!!!')
+            
+            for k, v in ipairs(game.propsTeams) do
+                print(k,v)
+                SetPlayerTeam(k)
+                SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
+            end
+
+            for k, v in ipairs(game.huntersTeams) do
+                print(k,v)
+                SetPlayerTeam(k)
+                SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
+            end
+            
+            game.state = "lobby"
+
+            game.huntersTeams = {}
+            game.propsTeams = {}
+
+            Delay(10000, function()
+                StartTheGame()
+            end)
+        end)
     end
+
 end
 
 
