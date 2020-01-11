@@ -61,6 +61,13 @@ AddEvent("OnPlayerSpawn", function(player)
         AddPlayerChat(player, "Giving weapon")
         SetPlayerWeapon(player, 13, 200, true, 1, true)
     end)
+
+    for i=1,GetObjectCount() do
+        if IsValidObject(i) then
+             CallRemoteEvent(player, "SetObjectOutilned", i)
+             
+        end
+     end
 end)
 
 
@@ -123,7 +130,6 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     local x, y, z = GetPlayerLocation(player)
     print("Getting player locaiton")
 
-  
     if(players[player].attached == true) then
         SetObjectDetached(players[player].object)
 
@@ -140,7 +146,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     else
         if(objectt == 0) then return end
         for _, v in ipairs(blacklists) do
-            print(v, GetObjectModel(objectt)    )
+            print(v, GetObjectModel(objectt))
             if(GetObjectModel(objectt) == v) then
                 OGK.SendPlayerMessage(player, "Vous ne pouvez pas devenir cette object !")
                 return
