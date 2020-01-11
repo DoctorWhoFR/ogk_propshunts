@@ -52,7 +52,7 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-    SetPlayerSpawnLocation(player,  -15648.6054, 133113.5625, 1561.6047, 90 )
+    SetPlayerSpawnLocation(player,  -15648.6054, 133113.5625, 1561.6047 + 50, 90 )
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
 
@@ -84,7 +84,7 @@ AddEvent("OnPackageStart", function()
     --    AddPlayerChatAll("Game start in 1 minute !")
     -- end)
 
-    Delay(30000, function()
+    Delay(20000, function()
     
         print('game start')
         AddPlayerChatAll("Game start !")
@@ -147,7 +147,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
                 return
             end
         end
-        SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0, 0, 0, 0)
+        SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 110, 0, 0, 0, 0)
         players[player].attached = true
         players[player].object = objectt
        
