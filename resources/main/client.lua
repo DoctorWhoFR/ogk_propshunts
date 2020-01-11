@@ -52,3 +52,8 @@ AddRemoteEvent("PlayerHider", function(player, status, object)
     GetPlayerActor(player):SetActorHiddenInGame(status)
     GetObjectStaticMeshComponent( object ):SetCollisionEnabled(ECollisionEnabled.QueryAndPhysics)
 end)
+
+AddRemoteEvent("SetObjectOutilned", function(objectId)
+    AddPlayerChat("Set outlining for player : " .. objectId)
+    SetObjectOutline(objectId, true)
+end)

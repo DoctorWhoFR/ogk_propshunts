@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/ogk_propshunts/resources/gui/build/static/css/main.css",
+    "main.js": "/ogk_propshunts/resources/gui/build/static/js/main.chunk.js",
+    "main.js.map": "/ogk_propshunts/resources/gui/build/static/js/main.chunk.js.map",
+    "runtime-main.js": "/ogk_propshunts/resources/gui/build/static/js/runtime-main.js",
+    "runtime-main.js.map": "/ogk_propshunts/resources/gui/build/static/js/runtime-main.js.map",
+    "static/js/2.chunk.js": "/ogk_propshunts/resources/gui/build/static/js/2.chunk.js",
+    "static/js/2.chunk.js.map": "/ogk_propshunts/resources/gui/build/static/js/2.chunk.js.map",
+    "index.html": "/ogk_propshunts/resources/gui/build/index.html",
+    "precache-manifest.1e8df4d45e7dfdbb9707f238e9099ed3.js": "/ogk_propshunts/resources/gui/build/precache-manifest.1e8df4d45e7dfdbb9707f238e9099ed3.js",
+    "service-worker.js": "/ogk_propshunts/resources/gui/build/service-worker.js",
+    "static/css/main.css.map": "/ogk_propshunts/resources/gui/build/static/css/main.css.map",
+    "static/js/2.chunk.js.LICENSE": "/ogk_propshunts/resources/gui/build/static/js/2.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.js",
+    "static/js/2.chunk.js",
+    "static/css/main.css",
+    "static/js/main.chunk.js"
+  ]
+}

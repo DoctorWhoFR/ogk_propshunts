@@ -6,12 +6,22 @@
         "resources/utils/messages/server.lua",
         "resources/map/server_map_loader.lua",
         "resources/main/damages.lua",
-        "resources/main/server.lua"
+        "resources/main/server.lua",
+        "resources/gui/server.lua"
     ],
     "client_scripts": [
-        "resources/main/client.lua"
+        "resources/main/client.lua",
+        "resources/gui/client.lua"
+
     ],
-    "files": [],
+    "files": [
+        "resources/gui/build/static/css/main.css",
+        "resources/gui/build/static/js/2.chunk.js",
+        "resources/gui/build/static/js/main.chunk.js",
+        "resources/gui/build/static/js/runtime-main.js",
+        "resources/gui/build/index.html"
+
+    ],
     "dependencies": {
         "@types/node": "^13.1.6"
     }
