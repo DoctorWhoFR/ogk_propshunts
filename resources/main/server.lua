@@ -44,7 +44,7 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-    SetPlayerSpawnLocation(player,  18483.21875, 140415.296875, 1556.962, 160)
+    SetPlayerSpawnLocation(player,  18483.21875+200, 140415.296875, 1556.962, 160)
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
 
