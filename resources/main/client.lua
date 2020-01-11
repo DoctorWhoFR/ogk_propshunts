@@ -48,6 +48,7 @@ function OnKeyPress(key)
 end
 AddEvent("OnKeyPress", OnKeyPress)
 
-AddRemoteEvent("PlayerHider", function(player, status)
+AddRemoteEvent("PlayerHider", function(player, status, object)
     GetPlayerActor(player):SetActorHiddenInGame(status)
+    GetObjectActor(object):SetCollisionEnabled(true)
 end)
