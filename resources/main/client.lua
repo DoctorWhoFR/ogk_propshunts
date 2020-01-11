@@ -35,8 +35,10 @@ local function GetPickupLookingAt()
     return GetClosestPickup(vx, vy, vz, 150)
 end
 
+AddEvent("OnPlayerSpawn", function(playerid)
+end)
+
 function OnKeyPress(key)
-	AddPlayerChat(key)
     if key == "E" then
         local object = GetPickupLookingAt()
         Delay(2000, function()
@@ -44,7 +46,10 @@ function OnKeyPress(key)
             CallRemoteEvent("AttachPlayerObject", object)
             AddPlayerChat("You have pressed TAB!")
         end)
-	end
+    end
 end
 AddEvent("OnKeyPress", OnKeyPress)
 
+AddRemoteEvent("PlayerHider", function(player, status)
+    GetPlayerActor(player):SetActorHiddenInGame(status)
+end)

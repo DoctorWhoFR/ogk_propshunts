@@ -70,11 +70,11 @@ AddEvent("OnPackageStart", function()
     --    AddPlayerChatAll("Game start in 1 minute !")
     -- end)
 
-    Delay(25000, function()
+    Delay(5000, function()
     
         AddPlayerChatAll("Game start !")
 
-        local object_test = CreateObject(1, 125773.000000 + 200, 80246.000000, 1645.000000, 90.0)
+        local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
            
         for k, v in ipairs(game.huntersTeams) do 
             
@@ -111,12 +111,17 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     Delay(1000, function()
         if(players[player].attached == true) then
             SetObjectDetached(players[player].object)
+
+                      
             AddPlayerChat(player, "test removed")
             players[player].attached = false
+            players[player].object = nil
+            CallRemoteEvent(player, "PlayerHider", player, false)
         else
-            SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0-50, 0, 0, 0, "foot_r")
+            SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0, 0, 0, 0)
             players[player].attached = true
             players[player].object = objectt
+            CallRemoteEvent(player, "PlayerHider", player, true)
         end
     end)
     print('player are now object:' .. objectt)
