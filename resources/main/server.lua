@@ -23,19 +23,11 @@ function OnPlayerJoin(player)
         Delay(1000, function()
             AddPlayerChat(player, "Bienvenue sur propshunts vous êtes dans le lobby")
 
-            -- choose a team for the player
-            local team_for_player = 2
-            
-            -- if team is hunter
-            if(team_for_player == 1) then
-                game.huntersTeams[player] = players[player]
-                AddPlayerChat(player, "Vous êtes dans la teams des Hunters.")
-            end
-    
-            if(team_for_player == 2) then
-                game.propsTeams[player] = players[player]
-                AddPlayerChat(player, "Vous êtes dans la teams des props.")
-            end
+            SetPlayerTeam(player)
+
+            Delay(1000, function()
+                StartTheGame()
+            end)
         end)
     end
 
@@ -52,7 +44,7 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-    SetPlayerSpawnLocation(player,  -15648.6054, 133113.5625, 1561.6047 + 50, 90 )
+    SetPlayerSpawnLocation(player,  18483.21875, 140415.296875, 1556.962, 160)
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
 
@@ -63,34 +55,33 @@ AddEvent("OnPlayerSpawn", function(player)
     end)
 end)
 
+function SetPlayerTeam(player)
 
-
-function GameEnd()
+    -- hunter: 1 props: 2
+    -- choose a team for the player
+    local count_props = #game.propsTeams  
+    local count_hunts = #game.huntersTeams
+    print(team_for_player)
+    if(game.state == "lobby" and game.huntersTeams[player] == nil and game.propsTeams[player] == nil) then
+        if(count_hunts < count_props) then
+            game.huntersTeams[player] = players[player]
+            AddPlayerChat(player, "1-Vous êtes dans la teams des Hunters.")
+        else
+            game.propsTeams[player] = players[player]
+            AddPlayerChat(player, "1-Vous êtes dans la teams des Props.")
+        end
+    end
 
 end
 
-AddEvent("OnPackageStart", function()
-    LoadMapFromIni("packages/ogk_gg/maps/armory.ini")
-    LoadMapFromIni("packages/ogk_gg/maps/western.ini")
-	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock1.ini")
-	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock2.ini")
-    LoadMapFromIni("packages/ogk_gg/maps/western_doorblock3.ini")
-    
-    -- check if game is on and do something
-    game.state = "lobby"
-
---    Delay(60000, function()
-  --      print('Game start in 1 minutes !')
-    --    AddPlayerChatAll("Game start in 1 minute !")
-    -- end)
-
-    Delay(20000, function()
-    
+ -- function for start game
+function StartTheGame()
+    if(#players >= 2) then
         print('game start')
         AddPlayerChatAll("Game start !")
 
         local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
-           
+        
         for k, v in ipairs(game.huntersTeams) do 
             
             SetPlayerDimension(k, 50)
@@ -112,6 +103,46 @@ AddEvent("OnPackageStart", function()
             
             print('Is on props team:' .. GetPlayerName(k))
         end
+    end
+end
+
+
+AddEvent("OnPackageStart", function()
+    LoadMapFromIni("packages/ogk_gg/maps/armory.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/gg2.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/western.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock1.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock2.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock3.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock4.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/ports1.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/ports2.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/ports_murs.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/port_objects.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/port_small.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/spawn_zone.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/trucks.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/trucks2.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/trucks3.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/tropico_walls.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/tropico_objects.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/tropicofixblocks.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/tropicofix2.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/hangar.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/hangarwalls.ini")
+	LoadMapFromIni("packages/ogk_gg/maps/hangar_spawns.ini")
+    
+    -- check if game is on and do something
+    game.state = "lobby"
+
+    Delay(60000, function()
+        print('Game start in 1 minutes !')
+        AddPlayerChatAll("Game start in 1 minute !")
+    end)
+
+    Delay(20000, function()
+    
+       
     
     end)
 
