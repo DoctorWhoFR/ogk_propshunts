@@ -132,7 +132,6 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
         players[player].object = nil
 
         local x,y,z = GetPlayerLocation(player)
-        SetPlayerLocation(player, x + 100, y, z)
    
         for k, v in ipairs(players) do
             CallRemoteEvent(k, "PlayerHider", player, false)
@@ -163,7 +162,9 @@ end)
 
 AddEvent("OnPlayerDeath", function(player, instigator)
     SetObjectDetached(players[player].object)
-
+    for k, v in ipairs(GetAllPlayers()) do
+        CallRemoteEvent(k, "PlayerHider", player, false, objectt)
+    end
     players[player].attached = false
     players[player].object = nil
 end)
