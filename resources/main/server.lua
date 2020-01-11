@@ -137,7 +137,11 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
         SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0, 0, 0, 0)
         players[player].attached = true
         players[player].object = objectt
-        CallRemoteEvent(player, "PlayerHider", player, true)
+       
+        -- async hide for all players
+        for k,v in ipairs(GetAllPlayers()) do
+            CallRemoteEvent(k, "PlayerHider", player, true)
+        end
         OGK.SendPlayerMessage(player, "Vous êtes maintenant devenu un props !")
     end
     print('player are now object:' .. objectt)
