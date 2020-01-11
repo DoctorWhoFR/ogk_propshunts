@@ -124,8 +124,10 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
 
         local x,y,z = GetPlayerLocation(player)
         SetPlayerLocation(player, x, y, z + 150)
-        CallRemoteEvent(player, "PlayerHider", player, false)
-    else
+        for k,v in ipairs(GetAllPlayers()) do
+           CallRemoteEvent(k, "PlayerHider", player, false)
+        end
+        else
         if(objectt == 0) then return end
         for _, v in ipairs(blacklists) do
             print(v, GetObjectModel(objectt)    )
