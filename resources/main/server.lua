@@ -20,13 +20,13 @@ blacklists = {851}
 function OnPlayerJoin(player)
     
     if(game.state == "lobby") then
-        Delay(5000, function()
-            NotifyPlayer(player, "Bienvenue sur propshunts vous êtes dans le lobby", "Lobby", 5000)
+        Delay(15000, function()
+            NotifyPlayer(player, "Bienvenue sur propshunts vous êtes dans le lobby", "Lobby", 20000)
         end)
 
         SetPlayerTeam(player)
 
-        Delay(1000, function()
+        Delay(5000, function()
             StartTheGame()
         end)
     end
@@ -85,7 +85,7 @@ function StartTheGame()
     
     if(#players >= 2) then
         print('game start')
-        AddPlayerChatAll("Game start !")
+        NotifyAllPlayers("Game start !", nil, 2000)
 
         local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
         
@@ -111,12 +111,12 @@ function StartTheGame()
             print('Is on props team:' .. GetPlayerName(k))
         end
 
-        AddPlayerChatAll('Props win after 5 minutes!')
+        AddPlayerChatAll('Props win after 5 minutes!', "Game started", 5000)
         Delay(15000, function()
-            AddPlayerChatAll('End of the game in 2.5 minutes!')
+            NotifyAllPlayers('End of the game in 2.5 minutes!', nil, 5000)
         end)
         Delay(60000, function() 
-            AddPlayerChatAll('props wins !!!!!!!!')
+            NotifyAllPlayers('props wins !!!!!!!!')
             
             for k, v in ipairs(game.propsTeams) do
                 print(k,v)
@@ -139,8 +139,9 @@ function StartTheGame()
                 StartTheGame()
             end)
         end)
+    else
+        NotifyAllPlayers("There is not enough players to start the game", "Game cancelled", 5000)
     end
-
 end
 
 
@@ -172,9 +173,11 @@ AddEvent("OnPackageStart", function()
     -- check if game is on and do something
     game.state = "lobby"
 
-    Delay(60000, function()
-        print('Game start in 1 minutes !')
-        AddPlayerChatAll("Game start in 1 minute !")
+    Delay(15000, function()
+        -- print('Game start in 1 minutes !')
+        -- NotifyAllPlayers("Game start in 1 minute !")
+        print("Starting the game")
+        StartTheGame()
     end)
 
     Delay(20000, function()
@@ -221,7 +224,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
         for k, v in ipairs(GetAllPlayers()) do
             CallRemoteEvent(k, "PlayerHider", player, true, objectt)
         end
-        NotifyPlayer(player, "Vous êtes maintenant devenu un props !", 2000)
+        NotifyPlayer(player, "Vous êtes maintenant devenu un props !", "", 2000)
     end
     print('player are now object:' .. objectt)
 end)

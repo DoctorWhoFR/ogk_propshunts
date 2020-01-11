@@ -14,3 +14,9 @@ function NotifyPlayer(playerid, message, title, timeout)
     end
     return id;
 end
+
+function NotifyAllPlayers(message, title, timeout)
+    for k,v in ipairs(GetAllPlayers()) do
+        NotifyPlayer(v, message, title, timeout)
+    end
+end
