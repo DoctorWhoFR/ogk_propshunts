@@ -43,7 +43,9 @@ function OnPlayerJoin(player)
     p = {
         steam_id = "",
         level = 0,
-        money = 500
+        money = 500,
+        attached = false,
+        object = 0
     }
 
     players[player] = p
@@ -104,10 +106,18 @@ end)
 
 AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     local x, y, z = GetPlayerLocation(player)
-    local object = CreateObject(1, x, y, z)
-    Delay(5000, function()
-        SetObjectAttached(object, ATTACH_PLAYER, player, 0, 0, 0, 0, 0, 0, "head")
-    end)
+    print("Getting player locaiton")
     
-    print('player are now object:' .. object)
+    Delay(1000, function()
+        if(players[player].attached == true) then
+            SetObjectDetached(players[player].object)
+            AddPlayerChat(player, "test removed")
+            players[player].attached = false
+        else
+            SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0-50, 0, 0, 0, "foot_r")
+            players[player].attached = true
+            players[player].object = objectt
+        end
+    end)
+    print('player are now object:' .. objectt)
 end)
