@@ -48,6 +48,8 @@ function OnKeyPress(key)
 end
 AddEvent("OnKeyPress", OnKeyPress)
 
-AddRemoteEvent("PlayerHider", function(player, status)
-    GetPlayerActor(player):SetActorHiddenInGame(status)
+AddRemoteEvent("PlayerHider", function(player, status, players)
+    for k, v in ipairs(players) do
+        GetPlayerActor(player):SetActorHiddenInGame(status)
+    end    
 end)

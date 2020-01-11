@@ -2,6 +2,8 @@
     "author": "OGK",
     "version": "0.1",
     "server_scripts": [
+        "resources/utils/messages/server_logger_console.lua",
+        "resources/utils/messages/server.lua",
         "resources/map/server_map_loader.lua",
         "resources/main/server.lua"
     ],

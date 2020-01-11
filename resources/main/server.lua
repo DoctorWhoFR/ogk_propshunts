@@ -14,11 +14,10 @@ game = {
 }
 
 players = {}
-blacklists = {'745','738', '688'}
+blacklists = {851}
 
 -- tp the player to the loby
 function OnPlayerJoin(player)
-    SetPlayerWeapon(player, 2, 50, 1, 1, true)
     
     if(game.state == "lobby") then
         Delay(1000, function()
@@ -53,7 +52,7 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-	SetPlayerSpawnLocation(player, -78409.382812, -165535.0625, 3218.9055175781, 0)
+	SetPlayerSpawnLocation(player, -78409.382812, -165535.0625, 3218.9055175781+200, 0)
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
 
@@ -76,8 +75,9 @@ AddEvent("OnPackageStart", function()
     --    AddPlayerChatAll("Game start in 1 minute !")
     -- end)
 
-    Delay(5000, function()
+    Delay(30000, function()
     
+        print('game start')
         AddPlayerChatAll("Game start !")
 
         local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
@@ -85,28 +85,28 @@ AddEvent("OnPackageStart", function()
         for k, v in ipairs(game.huntersTeams) do 
             
             SetPlayerDimension(k, 50)
-            AddPlayerChat(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !")
+            OGK.SendPlayerMessage(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !")
+            SetPlayerWeapon(k, 5, 500, true, 1, true)
 
             Delay(60000, function()
                 SetPlayerDimension(k, 0)
-                SetPlayerLocation(k, 125773.000000 + 500, 80246.000000, 1645.000000, 90.0)
+                SetPlayerLocation(k, 125773.000000+1000, 80246.000000, 1645.000000 , 90.0)
                 print('Is on hunts team:' .. GetPlayerName(player))
                 AddPlayerChat(k, "Vous devez trouvez les props.")
             end)
         end
 
         for k, v in ipairs(game.propsTeams) do 
-
             SetPlayerLocation(k, -73164.578125, -163825.953425, 3341.1821289063, 0)
-            AddPlayerChat(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!")
+            
+            OGK.SendPlayerMessage(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!")
+            
             print('Is on props team:' .. GetPlayerName(k))
         end
     
     end)
 
     print('Starting a game')
-
-   
     
 end)
 
@@ -118,19 +118,19 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     if(players[player].attached == true) then
         SetObjectDetached(players[player].object)
 
-                    
-        AddPlayerChat(player, "test removed")
+        OGK.SendPlayerMessage(player, "test removed")
         players[player].attached = false
         players[player].object = nil
 
         local x,y,z = GetPlayerLocation(player)
-        SetPlayerLocation(player, x, y, z + 10)
+        SetPlayerLocation(player, x, y, z + 150)
         CallRemoteEvent(player, "PlayerHider", player, false)
     else
         if(objectt == 0) then return end
         for _, v in ipairs(blacklists) do
-            if(objectt == v) then
-                AddPlayerChat(player, "Vous ne pouvez pas devenir cette object !")
+            print(v, GetObjectModel(objectt)    )
+            if(GetObjectModel(objectt) == v) then
+                OGK.SendPlayerMessage(player, "Vous ne pouvez pas devenir cette object !")
                 return
             end
         end
@@ -138,6 +138,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
         players[player].attached = true
         players[player].object = objectt
         CallRemoteEvent(player, "PlayerHider", player, true)
+        OGK.SendPlayerMessage(player, "Vous êtes maintenant devenu un props !")
     end
     print('player are now object:' .. objectt)
 end)
