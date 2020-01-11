@@ -52,7 +52,7 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-    SetPlayerSpawnLocation(player, -78409.382812, -165535.0625, 3218.9055175781 + 300.0, 0)
+    SetPlayerSpawnLocation(player,  -15648.6054, 133113.5625, 1561.6047, 90 )
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
 
@@ -70,6 +70,7 @@ function GameEnd()
 end
 
 AddEvent("OnPackageStart", function()
+    LoadMapFromIni("packages/ogk_gg/maps/armory.ini")
     LoadMapFromIni("packages/ogk_gg/maps/western.ini")
 	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock1.ini")
 	LoadMapFromIni("packages/ogk_gg/maps/western_doorblock2.ini")
@@ -105,7 +106,7 @@ AddEvent("OnPackageStart", function()
         end
 
         for k, v in ipairs(game.propsTeams) do 
-            SetPlayerLocation(k, -73164.578125, -163825.953425, 3341.1821289063, 0)
+            SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
             
             OGK.SendPlayerMessage(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!")
             

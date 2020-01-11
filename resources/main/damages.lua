@@ -5,16 +5,19 @@ AddEvent("OnPlayerWeaponShot", function(player, weapon, hittype, hitid, hitX, hi
     print("Hit Location "..hitX..","..hitY..","..hitZ)
 
     -- Check if the hitid is coherent to continue processing
-    if hittype == 6 then
+    if hittype == 5 and hitid ~= 0 then
         -- Search nearest player hit
         local victim = GetNearestPlayer2D(hitX, hitY)
-        local victimHealth = GetPlayerHealth(victim)
-        SetPlayerHealth(victim, victimHealth - 15)
-    else
-        local damage = Random(1, 3)
-        -- Give penalty to the player
-        local playerHealth = GetPlayerHealth(player)
-        SetPlayerHealth(player, playerHealth - damage)
+        if players[victim].object == hitid then
+            local victimHealth = GetPlayerHealth(victim)
+            SetPlayerHealth(victim, victimHealth - 15)
+            return false;
+        end
     end
+
+    local damage = Random(1, 3)
+    -- Give penalty to the player
+    local playerHealth = GetPlayerHealth(player)
+    SetPlayerHealth(player, playerHealth - damage)
     return false
 end)
