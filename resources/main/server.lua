@@ -18,6 +18,7 @@ blacklists = {'745','738', '688'}
 
 -- tp the player to the loby
 function OnPlayerJoin(player)
+    SetPlayerWeapon(player, 2, 50, 1, 1, true)
     
     if(game.state == "lobby") then
         Delay(1000, function()
@@ -140,3 +141,25 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     end
     print('player are now object:' .. objectt)
 end)
+
+function OnPlayerWeaponShot(player, weapon, hittype, hitid, hitx, hity, hitz, startx, starty, startz, normalx, normaly, normalz)
+	local action = {
+		"in the air",
+		"at player",
+		"at vehicle",
+		"an NPC",
+		"at object",
+		"on ground",
+		"in water"
+	}
+	
+	print(GetPlayerName(player).."("..player..") shot "..action[hittype].." (ID "..hitid..") using weapon ("..weapon..")")
+	
+	if (hittype == HIT_OBJECT) then
+        local type, id = GetObjectAttachmentInfo(hitid)
+        if(type == ATTACH_PLAYER) then
+            AddPlayerChat(player, "test")
+        end
+    end
+end
+AddEvent("OnPlayerWeaponShot", OnPlayerWeaponShot)
