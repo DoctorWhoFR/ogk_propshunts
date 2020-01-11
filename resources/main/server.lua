@@ -20,14 +20,14 @@ blacklists = {851}
 function OnPlayerJoin(player)
     
     if(game.state == "lobby") then
+        Delay(5000, function()
+            NotifyPlayer(player, "Bienvenue sur propshunts vous êtes dans le lobby", "Lobby", 5000)
+        end)
+
+        SetPlayerTeam(player)
+
         Delay(1000, function()
-            AddPlayerChat(player, "Bienvenue sur propshunts vous êtes dans le lobby")
-
-            SetPlayerTeam(player)
-
-            Delay(1000, function()
-                StartTheGame()
-            end)
+            StartTheGame()
         end)
     end
 
@@ -50,7 +50,6 @@ AddEvent("OnPlayerJoin", OnPlayerJoin)
 
 AddEvent("OnPlayerSpawn", function(player)
     Delay(5000, function()
-        AddPlayerChat(player, "Giving weapon")
         SetPlayerWeapon(player, 13, 200, true, 1, true)
     end)
 
@@ -93,21 +92,21 @@ function StartTheGame()
         for k, v in ipairs(game.huntersTeams) do 
             
             SetPlayerDimension(k, 50)
-            OGK.SendPlayerMessage(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !")
+            NotifyPlayer(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !", "HUNTER", 60000)
             SetPlayerWeapon(k, 5, 500, true, 1, true)
 
             Delay(5000, function()
                 SetPlayerDimension(k, 0)
                 SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
                 print('Is on hunts team:' .. GetPlayerName(player))
-                AddPlayerChat(k, "Vous devez trouvez les props.")
+                NotifyPlayer(k, "Vous devez trouvez les props.", "HUNTER", 2000)
             end)
         end
 
         for k, v in ipairs(game.propsTeams) do 
             SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
             
-            OGK.SendPlayerMessage(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!")
+            NotifyPlayer(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!", "PROP")
             
             print('Is on props team:' .. GetPlayerName(k))
         end

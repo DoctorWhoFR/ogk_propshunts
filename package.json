@@ -2,6 +2,9 @@
     "author": "OGK",
     "version": "0.1",
     "server_scripts": [
+        "resources/libs/lodash.lua",
+        "resources/libs/json.lua",
+        "resources/libs/uuid.lua",
         "resources/utils/messages/server_logger_console.lua",
         "resources/utils/messages/server.lua",
         "resources/map/server_map_loader.lua",
@@ -10,6 +13,8 @@
         "resources/gui/server.lua"
     ],
     "client_scripts": [
+        "resources/libs/lodash.lua",
+        "resources/libs/json.lua",
         "resources/main/client.lua",
         "resources/gui/client.lua"
 
@@ -19,6 +24,10 @@
         "resources/gui/build/static/js/2.chunk.js",
         "resources/gui/build/static/js/main.chunk.js",
         "resources/gui/build/static/js/runtime-main.js",
+        "resources/gui/build/fonts/edunline.ttf",
+        "resources/gui/build/fonts/smb.ttf",
+        "resources/gui/build/fonts/RingMatrix.ttf",
+        "resources/gui/build/fonts/csd.ttf",
         "resources/gui/build/index.html"
 
     ],
