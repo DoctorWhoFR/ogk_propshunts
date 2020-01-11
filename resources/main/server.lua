@@ -106,7 +106,7 @@ function StartTheGame()
         for k, v in ipairs(game.propsTeams) do 
             SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
             
-            NotifyPlayer(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!", "PROP")
+            NotifyPlayer(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!", "PROP", 10000)
             
             print('Is on props team:' .. GetPlayerName(k))
         end
@@ -209,7 +209,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
         for _, v in ipairs(blacklists) do
             print(v, GetObjectModel(objectt))
             if(GetObjectModel(objectt) == v) then
-                OGK.SendPlayerMessage(player, "Vous ne pouvez pas devenir cette object !")
+                NotifyPlayer(player, "Vous ne pouvez pas devenir cet objet !", "", 1000)
                 return
             end
         end
@@ -221,7 +221,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
         for k, v in ipairs(GetAllPlayers()) do
             CallRemoteEvent(k, "PlayerHider", player, true, objectt)
         end
-        OGK.SendPlayerMessage(player, "Vous êtes maintenant devenu un props !")
+        NotifyPlayer(player, "Vous êtes maintenant devenu un props !", 2000)
     end
     print('player are now object:' .. objectt)
 end)
