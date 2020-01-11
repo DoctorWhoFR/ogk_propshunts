@@ -53,12 +53,13 @@ AddEvent("OnPlayerSpawn", function(player)
         SetPlayerWeapon(player, 13, 200, true, 1, true)
     end)
 
-    for i=1,GetObjectCount() do
-        if IsValidObject(i) then
-             CallRemoteEvent(player, "SetObjectOutilned", i)
-             
+    Delay(5000, function()
+        for i=1,GetObjectCount() do
+            if IsValidObject(i) then
+                CallRemoteEvent(player, "SetObjectOutilned", i)
+            end
         end
-     end
+    end)
 end)
 
 function SetPlayerTeam(player)
