@@ -50,7 +50,8 @@ AddEvent("OnKeyPress", OnKeyPress)
 
 AddRemoteEvent("PlayerHider", function(player, status, object)
     GetPlayerActor(player):SetActorHiddenInGame(status)
-    GetObjectActor(object):SetCollisionEnabled(true)
+    GetPlayerActor(player):SetCollisionEnabled(false)
+    GetObjectStaticMeshComponent( object ):SetCollisionEnabled(ECollisionEnabled.QueryAndPhysics)
 end)
 
 AddEvent("OnScriptError", function(message)

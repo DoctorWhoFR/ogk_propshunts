@@ -147,7 +147,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
                 return
             end
         end
-        SetObjectAttached(objectt, ATTACH_NONE, player, 0, 0, 0, 0, 0, 0)
+        SetObjectAttached(objectt, ATTACH_PLAYER, player, 0, 0, 0, 0, 0, 0)
         players[player].attached = true
         players[player].object = objectt
        
@@ -162,6 +162,8 @@ end)
 
 
 AddEvent("OnPlayerDeath", function(player, instigator)
+    SetObjectDetached(players[player].object)
+
     players[player].attached = false
     players[player].object = nil
 end)
