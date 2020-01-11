@@ -158,3 +158,9 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     end
     print('player are now object:' .. objectt)
 end)
+
+
+AddEvent("OnPlayerDeath", function(player, instigator)
+    players[player].attached = false
+    players[player].object = nil
+end)
