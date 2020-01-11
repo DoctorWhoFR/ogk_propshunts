@@ -5,6 +5,7 @@
         "resources/utils/messages/server_logger_console.lua",
         "resources/utils/messages/server.lua",
         "resources/map/server_map_loader.lua",
+        "resources/main/damages.lua",
         "resources/main/server.lua"
     ],
     "client_scripts": [

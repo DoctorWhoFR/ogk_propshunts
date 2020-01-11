@@ -52,9 +52,17 @@ function OnPlayerJoin(player)
     players[player] = p
     
     -- Set where the player is going to spawn.
-	SetPlayerSpawnLocation(player, -78409.382812, -165535.0625, 3218.9055175781+200, 0)
+    SetPlayerSpawnLocation(player, -78409.382812, -165535.0625, 3218.9055175781 + 300.0, 0)
 end
 AddEvent("OnPlayerJoin", OnPlayerJoin)
+
+AddEvent("OnPlayerSpawn", function(player)
+    Delay(5000, function()
+        AddPlayerChat(player, "Giving weapon")
+        SetPlayerWeapon(player, 13, 200, true, 1, true)
+    end)
+end)
+
 
 
 function GameEnd()
