@@ -8,7 +8,7 @@
 game = {
 
     state = "lobby", -- lobby,game
-    minplayer = 1,
+    minplayer = 2,
     huntersTeams = {},
     propsTeams = {}
 }
@@ -64,12 +64,6 @@ function assign_spawn(player)
     local spawn_idx = Random(1, spawns_max[current_map])
     local assigned_spawn = spawn_location[spawn_idx]
     
-    if spawn_idx == p["last_spawn_index"] then
-        print("Reassigning spawn ....")
-        assign_spawn(player)
-        return
-    end
-    p["last_spawn_index"] = spawn_idx
     if OGK_GG_DEBUG then
         AddPlayerChat(player, "You are assigned spawn #".. spawn_idx.. "")
     end
@@ -83,16 +77,19 @@ function SetPlayerTeam(player)
     -- choose a team for the player
     local count_props = #game.propsTeams  
     local count_hunts = #game.huntersTeams
+    
+    print(count_props, count_hunts)
     if(game.state == "lobby" or game.state == "regame") then
-        if(count_hunts <= count_props) then
-            game.huntersTeams[player] = players[player]
+        if(count_hunts ~= count_props) then
+            game.huntersTeams[count_hunts+1] = player
             players[player].team = "hunter"
             print(count_hunts, count_props)
             NotifyPlayer(player, "1-Vous êtes dans la teams des Hunters.", "HUNTERS", 5000)
         else
-            game.propsTeams[player] = players[player]
+            game.propsTeams[count_props+1] = player
             players[player].team = "prop"
             print('hunt Props')
+            print(count_hunts, count_props)
             NotifyPlayer(player, "2-Vous êtes dans la teams des Props.", "PROPS", 5000)
         end
     end
@@ -111,34 +108,31 @@ function StartTheGame()
             Delay(30000, function()
                 print('game start')
                 NotifyAllPlayers("Game start !", "test", 2000)
-                print(game.huntersTeams[1], game.propsTeams[1])
                 local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
     
-                for k, v in ipairs(game.huntersTeams) do 
-                    SetPlayerDimension(k, 50)
-                    NotifyPlayer(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !", "HUNTER", 60000)
-                    SetPlayerWeapon(k, 5, 500, true, 1, true)
+                for _, v in ipairs(game.huntersTeams) do 
+                    SetPlayerDimension(v, 50)
+                    NotifyPlayer(v, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !", "HUNTER", 60000)
         
                     Delay(15000, function()
-                        SetPlayerDimension(k, 0)
-                        assign_spawn(k)
-                        print('Is on hunts team:' .. GetPlayerName(k))
-                        NotifyPlayer(k, "Vous devez trouvez les props.", "HUNTER", 2000)
+                        assign_spawn(v)
+                        print(v)
+                        NotifyPlayer(v, "Vous devez trouvez les props.", "HUNTER", 2000)
                     end)
+                    SetPlayerWeapon(v, 5, 500, true, 1, true)
                 end
         
-                for k, v in ipairs(game.propsTeams) do 
-                    assign_spawn(k)
-                    NotifyPlayer(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!", "PROP", 10000)
-                    print('Is on props team:' .. GetPlayerName(k))
+                for _, v in ipairs(game.propsTeams) do 
+                    assign_spawn(v)
+                    NotifyPlayer(v, "Vous avez 1 minutes pour vous cachez avec (E) !!!", "PROP", 10000)
                 end
         
                 AddPlayerChatAll('Props win after 5 minutes!', "Game started", 5000)
-                Delay(120000, function()
+                Delay(15000, function()
                     NotifyAllPlayers('End of the game in 2.5 minutes!', nil, 5000)
                 end)
                 Delay(30000, function() 
-                    NotifyAllPlayers('props wins !!!!!!!!', nil, 5000)
+                    NotifyAllPlayers('props wins !!!!!!!!', nil, 1000)
                     
                     game.huntersTeams = {}
                     game.propsTeams = {}
@@ -153,8 +147,11 @@ function StartTheGame()
     
                     Delay(5000, function()
                         for k, v in ipairs(GetAllPlayers()) do
+                            SetObjectDetached(players[k].object)
                             SetPlayerWeapon(k, 1, 0, true, 1, true)
                             SetPlayerSpectate(k, false)
+                            CallEvent("PlayerHider", k, false, players[k].object)
+                            
                             players[k].team = ""
                             local rand = Random(1, 100)
                             -- Set where the player is going to spawn.
@@ -202,7 +199,9 @@ AddEvent("OnPackageStart", function()
 	LoadMapFromIni("packages/ogk_gg/maps/hangar_spawns.ini")
 
     CreateTimer(function()
-        StartTheGame()
+        if(game.state ~= "lobby" or game.state ~= "regame") then
+            StartTheGame()
+        end
     end, 30000)
     
     -- check if game is on and do something
@@ -267,7 +266,7 @@ function PlayerJoinFunc(player)
     else    
         NotifyPlayer(player, "Une partie est en cours !", "CURRENTLY IN A GAME !!!", 60000)
         Delay(5000, function()
-            SetPlayerLocation(player, -15648.6054, 133113.5625, 1561.6047, 90 )
+            assign_spawn(player)
             SetPlayerSpectate(player, true)
         end)
     end
