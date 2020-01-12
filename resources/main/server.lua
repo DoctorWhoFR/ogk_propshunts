@@ -20,8 +20,8 @@ blacklists = {851}
 function OnPlayerJoin(player)
     
     if(game.state == "lobby") then
-        Delay(15000, function()
-            NotifyPlayer(player, "Bienvenue sur propshunts vous êtes dans le lobby", "Lobby", 20000)
+        Delay(10000, function()
+            NotifyPlayer(player, "Bienvenue sur propshunts vous êtes dans le lobby", "Lobby", 10000)
         end)
 
         SetPlayerTeam(player)
@@ -141,7 +141,11 @@ function StartTheGame()
             end)
         end)
     else
-        NotifyAllPlayers("There is not enough players to start the game", "Game cancelled", 5000)
+        Delay(20000, function()
+            local counts = GetPlayerCount()
+            local max = 4 - counts
+            NotifyAllPlayers("There is not enough players to start the game !" .. "You have to wait: " .. max .. "more players!", "Enough player !", 5000)
+        end)
     end
 end
 
