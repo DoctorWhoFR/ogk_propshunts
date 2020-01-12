@@ -10,7 +10,11 @@ game = {
     state = "lobby", -- lobby,game
     huntersTeams = {},
     propsTeams = {}
+}
 
+timesConfigs = {
+    gametime = 0,
+    playerjoinmsg = 0
 }
 
 players = {}
@@ -24,11 +28,7 @@ function OnPlayerJoin(player)
             NotifyPlayer(player, "Bienvenue sur propshunts vous êtes dans le lobby", "Lobby", 10000)
         end)
 
-        SetPlayerTeam(player)
-
-        Delay(5000, function()
-            StartTheGame()
-        end)
+        
     end
 
     -- set the player to global
@@ -53,6 +53,13 @@ AddEvent("OnPlayerSpawn", function(player)
         SetPlayerWeapon(player, 13, 200, true, 1, true)
     end)
 
+    SetPlayerTeam(player)
+
+    Delay(15000, function()
+        print('starting the game')
+        StartTheGame()
+    end)
+
     Delay(5000, function()
         for i=1,GetObjectCount() do
             if IsValidObject(i) then
@@ -63,19 +70,19 @@ AddEvent("OnPlayerSpawn", function(player)
 end)
 
 function SetPlayerTeam(player)
-
     -- hunter: 1 props: 2
     -- choose a team for the player
     local count_props = #game.propsTeams  
     local count_hunts = #game.huntersTeams
-    print(team_for_player)
-    if(game.state == "lobby" and game.huntersTeams[player] == nil and game.propsTeams[player] == nil) then
-        if(count_hunts < count_props) then
+    if(game.state == "lobby") then
+        if(count_hunts >= count_props) then
             game.huntersTeams[player] = players[player]
-            AddPlayerChat(player, "1-Vous êtes dans la teams des Hunters.")
+            print(game.huntersTeams[player])
+            NotifyPlayer(player, "1-Vous êtes dans la teams des Hunters.", "HUNTERS", 5000)
         else
             game.propsTeams[player] = players[player]
-            AddPlayerChat(player, "1-Vous êtes dans la teams des Props.")
+            print('hunt Props')
+            NotifyPlayer(player, "2-Vous êtes dans la teams des Props.", "PROPS", 5000)
         end
     end
 
@@ -83,68 +90,70 @@ end
 
  -- function for start game
 function StartTheGame()
+    if(GetPlayerCount() >= 1) then
+        -- start the game after 5 seconds (for players spawnings time)
+        Delay(5000, function()
+            print('game start')
+            NotifyAllPlayers("Game start !", "test", 2000)
+            print(game.huntersTeams[1], game.propsTeams[1 ])
+            local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
+            
+            for k, v in ipairs(game.huntersTeams) do 
+                SetPlayerDimension(k, 50)
+                NotifyPlayer(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !", "HUNTER", 60000)
+                SetPlayerWeapon(k, 5, 500, true, 1, true)
     
-    if(#players >= 2) then
-        print('game start')
-        NotifyAllPlayers("Game start !", nil, 2000)
-
-        local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
-        
-        for k, v in ipairs(game.huntersTeams) do 
-            
-            SetPlayerDimension(k, 50)
-            NotifyPlayer(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !", "HUNTER", 60000)
-            SetPlayerWeapon(k, 5, 500, true, 1, true)
-
-            Delay(5000, function()
-                SetPlayerDimension(k, 0)
+                Delay(5000, function()
+                    SetPlayerDimension(k, 0)
+                    SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
+                    print('Is on hunts team:' .. GetPlayerName(k))
+                    NotifyPlayer(k, "Vous devez trouvez les props.", "HUNTER", 2000)
+                end)
+            end
+    
+            for k, v in ipairs(game.propsTeams) do 
                 SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
-                print('Is on hunts team:' .. GetPlayerName(player))
-                NotifyPlayer(k, "Vous devez trouvez les props.", "HUNTER", 2000)
+                
+                NotifyPlayer(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!", "PROP", 10000)
+                
+                print('Is on props team:' .. GetPlayerName(k))
+            end
+    
+            AddPlayerChatAll('Props win after 5 minutes!', "Game started", 5000)
+            Delay(120000, function()
+                NotifyAllPlayers('End of the game in 2.5 minutes!', nil, 5000)
             end)
-        end
-
-        for k, v in ipairs(game.propsTeams) do 
-            SetPlayerLocation(k, -15648.6054, 133113.5625, 1561.6047, 90 )
-            
-            NotifyPlayer(k, "Vous avez 1 minutes pour vous cachez avec (E) !!!", "PROP", 10000)
-            
-            print('Is on props team:' .. GetPlayerName(k))
-        end
-
-        AddPlayerChatAll('Props win after 5 minutes!', "Game started", 5000)
-        Delay(15000, function()
-            NotifyAllPlayers('End of the game in 2.5 minutes!', nil, 5000)
-        end)
-        Delay(60000, function() 
-            NotifyAllPlayers('props wins !!!!!!!!')
-            
-            for k, v in ipairs(game.propsTeams) do
-                print(k,v)
-                SetPlayerTeam(k)
-                SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
-            end
-
-            for k, v in ipairs(game.huntersTeams) do
-                print(k,v)
-                SetPlayerTeam(k)
-                SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
-            end
-            
-            game.state = "lobby"
-
-            game.huntersTeams = {}
-            game.propsTeams = {}
-
-            Delay(10000, function()
-                StartTheGame()
+            Delay(240000, function() 
+                NotifyAllPlayers('props wins !!!!!!!!')
+                
+                for k, v in ipairs(game.propsTeams) do
+                    print(k,v)
+                    SetPlayerTeam(k)
+                    SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
+                end
+    
+                for k, v in ipairs(game.huntersTeams) do
+                    print(k,v)
+                    SetPlayerTeam(k)
+                    SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
+                end
+                
+                game.state = "lobby"
+    
+                game.huntersTeams = {}
+                game.propsTeams = {}
+    
+                Delay(10000, function()
+                    StartTheGame()
+                end)
             end)
         end)
+       
     else
         Delay(20000, function()
             local counts = GetPlayerCount()
             local max = 4 - counts
-            NotifyAllPlayers("There is not enough players to start the game !" .. "You have to wait: " .. max .. "more players!", "Enough player !", 5000)
+            NotifyPlayer(k, "There is not enough players to start the game !" .. "You have to wait: " .. max .. "more players!", "Enough player !", 5000)
         end)
     end
 end
@@ -177,22 +186,6 @@ AddEvent("OnPackageStart", function()
     
     -- check if game is on and do something
     game.state = "lobby"
-
-    Delay(15000, function()
-        -- print('Game start in 1 minutes !')
-        -- NotifyAllPlayers("Game start in 1 minute !")
-        print("Starting the game")
-        StartTheGame()
-    end)
-
-    Delay(20000, function()
-    
-       
-    
-    end)
-
-    print('Starting a game')
-    
 end)
 
 AddRemoteEvent("AttachPlayerObject", function(player, objectt)
