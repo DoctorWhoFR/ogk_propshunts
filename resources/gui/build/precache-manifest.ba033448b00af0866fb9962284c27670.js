@@ -4,11 +4,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ogk_propshunts/resources/gui/build/index.html"
   },
   {
-    "revision": "e7fbccb5d965ee1685f3",
+    "revision": "cf1b7da798800da3f03d",
     "url": "/ogk_propshunts/resources/gui/build/static/css/main.css"
   },
   {
-    "revision": "0d779f8a2d98e2bb7b6e",
+    "revision": "7eca8a4bbc6194d6027c",
     "url": "/ogk_propshunts/resources/gui/build/static/js/2.chunk.js"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ogk_propshunts/resources/gui/build/static/js/2.chunk.js.LICENSE"
   },
   {
-    "revision": "e7fbccb5d965ee1685f3",
+    "revision": "cf1b7da798800da3f03d",
     "url": "/ogk_propshunts/resources/gui/build/static/js/main.chunk.js"
   },
   {

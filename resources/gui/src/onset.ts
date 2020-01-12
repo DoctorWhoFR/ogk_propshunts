@@ -1,4 +1,3 @@
-import {incrementCounter} from "./redux/reducer";
 import {store} from "./redux/store";
 import { AnyAction } from "@reduxjs/toolkit";
 
