@@ -27,8 +27,12 @@ function OnPlayerJoin(player)
         Delay(10000, function()
             NotifyPlayer(player, "Bienvenue sur propshunts vous êtes dans le lobby", "Lobby", 10000)
         end)
-
-        
+    else
+        Delay(10000, function()
+            SetPlayerLocation(player, -15648.6054, 133113.5625, 1561.6047, 90 )
+            SetPlayerSpectate(player, true)
+            NotifyPlayer(player, "Une partie est en cours !", "CURRENTLY IN A GAME !!!", 10000)
+        end)
     end
 
     -- set the player to global
@@ -52,14 +56,14 @@ AddEvent("OnPlayerSpawn", function(player)
     Delay(5000, function()
         SetPlayerWeapon(player, 13, 200, true, 1, true)
     end)
+    if(game.state == "lobby") then
+        SetPlayerTeam(player)
 
-    SetPlayerTeam(player)
-
-    Delay(15000, function()
-        print('starting the game')
-        StartTheGame()
-    end)
-
+        Delay(15000, function()
+            StartTheGame()
+        end)
+    end
+   
     Delay(5000, function()
         for i=1,GetObjectCount() do
             if IsValidObject(i) then
@@ -91,13 +95,16 @@ end
  -- function for start game
 function StartTheGame()
     if(GetPlayerCount() >= 1) then
+        NotifyAllPlayers("Game start in 30 seconds !", "Game Start !", 30000)
         -- start the game after 5 seconds (for players spawnings time)
-        Delay(5000, function()
+        Delay(30000, function()
             print('game start')
             NotifyAllPlayers("Game start !", "test", 2000)
-            print(game.huntersTeams[1], game.propsTeams[1 ])
+            print(game.huntersTeams[1], game.propsTeams[1])
             local object_test = CreateObject(490, 125773.000000, 80246.000000, 1645.000000, 0)
             
+            game.state = "game"
+
             for k, v in ipairs(game.huntersTeams) do 
                 SetPlayerDimension(k, 50)
                 NotifyPlayer(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !", "HUNTER", 60000)
@@ -126,24 +133,21 @@ function StartTheGame()
             Delay(240000, function() 
                 NotifyAllPlayers('props wins !!!!!!!!')
                 
-                for k, v in ipairs(game.propsTeams) do
-                    print(k,v)
-                    SetPlayerTeam(k)
-                    SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
-                end
-    
-                for k, v in ipairs(game.huntersTeams) do
-                    print(k,v)
-                    SetPlayerTeam(k)
-                    SetPlayerSpawnLocation(k,  18483.21875+150, 140415.296875, 1556.962, 160)
-                end
-                
-                game.state = "lobby"
-    
                 game.huntersTeams = {}
                 game.propsTeams = {}
+
+                game.state = "lobby"
+
+                local randomx = Random(1, 50)
+
+                for k, v in ipairs(GetAllPlayers()) do
+                    SetPlayerTeam(k)
+                    SetPlayerSpectate(k, false)
+                    SetPlayerLocation(k,  18483.21875+randomx, 140415.296875, 1556.962+100, 160)
+                end
+                    
     
-                Delay(10000, function()
+                Delay(240000, function()
                     StartTheGame()
                 end)
             end)
