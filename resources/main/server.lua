@@ -151,6 +151,7 @@ function StartTheGame()
     
                     Delay(5000, function()
                         for k, v in ipairs(GetAllPlayers()) do
+                            SetPlayerWeapon(k, 1, 0, true, 1, true)
                             SetPlayerSpectate(k, false)
                             players[k].team = ""
                             local rand = Random(1, 100)
