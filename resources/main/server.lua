@@ -8,7 +8,7 @@
 game = {
 
     state = "lobby", -- lobby,game
-    minplayer = 1,
+    minplayer = 2,
     huntersTeams = {},
     propsTeams = {}
 }
@@ -75,7 +75,7 @@ function assign_spawn(player)
     end
     -- local assigned_spawn = spawn_location[Random(1, 1]
     
-    SetPlayerLocation(player, assigned_spawn[1], assigned_spawn[2], assigned_spawn[3] + 100, assigned_spawn[4])
+    SetPlayerLocation(player, assigned_spawn[1], assigned_spawn[2], assigned_spawn[3] + 150, assigned_spawn[4])
 end
 
 function SetPlayerTeam(player)
@@ -84,10 +84,10 @@ function SetPlayerTeam(player)
     local count_props = #game.propsTeams  
     local count_hunts = #game.huntersTeams
     if(game.state == "lobby" or game.state == "regame") then
-        if(count_hunts <= count_props) then
+        if(count_hunts < count_props) then
             game.huntersTeams[player] = players[player]
             players[player].team = "hunter"
-            print(game.huntersTeams[player])
+            print(count_hunts, count_props)
             NotifyPlayer(player, "1-Vous êtes dans la teams des Hunters.", "HUNTERS", 5000)
         else
             game.propsTeams[player] = players[player]
@@ -117,7 +117,7 @@ function StartTheGame()
                     NotifyPlayer(k, "Vous devez attendre pendant 1 minutes pendants que les props ce cache !", "HUNTER", 60000)
                     SetPlayerWeapon(k, 5, 500, true, 1, true)
         
-                    Delay(5000, function()
+                    Delay(15000, function()
                         SetPlayerDimension(k, 0)
                         assign_spawn(k)
                         print('Is on hunts team:' .. GetPlayerName(k))

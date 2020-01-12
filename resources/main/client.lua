@@ -46,6 +46,12 @@ function OnKeyPress(key)
     if key == "Z" then
         CallRemoteEvent("SetPlayerAsSpawn", GetPlayerId())
     end
+    if key == "D" then
+        CallRemoteEvent("SetPlayerAsSpawn", GetPlayerId())
+    end
+    if key == "S" then
+        CallRemoteEvent("SetPlayerAsSpawn", GetPlayerId())
+    end
 end
 AddEvent("OnKeyPress", OnKeyPress)
 
