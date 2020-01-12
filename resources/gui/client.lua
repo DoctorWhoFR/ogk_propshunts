@@ -6,17 +6,14 @@ AddEvent("OnPlayerSpawn", function()
         SetWebAlignment(gui, 0.0, 0.0)
         SetWebAnchors(gui, 0.0, 0.0, 1.0, 1.0)
         SetWebVisibility(gui, WEB_VISIBLE)
-        SetInputMode(INPUT_GAME)    
-        
-        CreateTimer(function()
-            if gui then
-                ExecuteWebJS(gui, "incrementCounter()")
-            end
-        end, 1000)
+        SetInputMode(INPUT_GAME)
 
         CreateTimer(function()
-            local playerHealth = GetPlayerHealth()
-        -- ExecuteWebJSExecuteWebJS(gui, "updatePlayerState(''")
+            if gui then
+                local playerHealth = GetPlayerHealth()
+                local playerState = json.stringify({health = playerHealth})
+                ExecuteWebJSExecuteWebJS(gui, "updatePlayerState('"..playerState.."')")
+            end
         end, 180)
     end
 end)

@@ -13,6 +13,7 @@ import "./assets/css/ogk_leaderboard.css"
 import "./assets/css/ogk_ui.css"
 import "./assets/css/ogk_votemap.css"
 import "./assets/css/ogk_notifications.css"
+import { Hud } from './Hud';
 
 // This is the main part of the application that will run as soon as the cef is ready and javascript loaded
 const App: React.FC = () => {
@@ -20,6 +21,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <div className="content">
         <Notifications/>
+        <Hud />
       </div>
     </Provider>
   );
