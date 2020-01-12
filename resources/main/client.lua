@@ -41,9 +41,10 @@ end)
 function OnKeyPress(key)
     if key == "E" then
         local object = GetPickupLookingAt()
-        AddPlayerChat("Getting the "..object)
         CallRemoteEvent("AttachPlayerObject", object)
-        AddPlayerChat("You have pressed TAB!")
+    end
+    if key == "Z" then
+        CallRemoteEvent("SetPlayerAsSpawn", GetPlayerId())
     end
 end
 AddEvent("OnKeyPress", OnKeyPress)

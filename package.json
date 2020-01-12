@@ -5,6 +5,7 @@
         "resources/libs/lodash.lua",
         "resources/libs/json.lua",
         "resources/libs/uuid.lua",
+        "resources/main/spawn.lua",
         "resources/utils/messages/server_logger_console.lua",
         "resources/utils/messages/server.lua",
         "resources/map/server_map_loader.lua",
