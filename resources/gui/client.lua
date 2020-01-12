@@ -12,7 +12,8 @@ AddEvent("OnPlayerSpawn", function()
             if gui then
                 local playerHealth = GetPlayerHealth()
                 local playerState = json.stringify({health = playerHealth})
-                ExecuteWebJSExecuteWebJS(gui, "updatePlayerState('"..playerState.."')")
+                AddPlayerChat("Setting playerHeamth to ..."..playerState)
+                ExecuteWebJS(gui, "updatePlayerState('"..playerState.."')")
             end
         end, 180)
     end
