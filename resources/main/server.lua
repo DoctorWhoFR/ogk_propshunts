@@ -8,7 +8,7 @@
 game = {
 
     state = "lobby", -- lobby,game
-    minplayer = 2,
+    minplayer = 1,
     huntersTeams = {},
     propsTeams = {}
 }
@@ -84,7 +84,7 @@ function SetPlayerTeam(player)
     local count_props = #game.propsTeams  
     local count_hunts = #game.huntersTeams
     if(game.state == "lobby" or game.state == "regame") then
-        if(count_hunts < count_props) then
+        if(count_hunts <= count_props) then
             game.huntersTeams[player] = players[player]
             players[player].team = "hunter"
             print(count_hunts, count_props)
@@ -101,7 +101,9 @@ end
 
  -- function for start game
 function StartTheGame()
-    if(GetPlayerCount() >= game.minplayer) then
+    local calc = #game.huntersTeams + #game.propsTeams
+    print(calc, #game.huntersTeams, #game.propsTeams)
+    if(calc >= game.minplayer) then
         if(game.state == "lobby") then
             game.state = "game"
             NotifyAllPlayers("Game start in 30 seconds !", "Game Start !", 30000)
