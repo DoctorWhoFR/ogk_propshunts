@@ -69,7 +69,7 @@ end
 
 function EndTheGame()
     -- check if props doesn't win
-    if(game.state == "huntwin") then return false end
+    if(game.state == "huntwin" or game.state == "lobby") then return false end
     Delay(150000, function()
         NotifyAllPlayers('End of the game in 2.5 minutes!', nil, 5000)
     end)
@@ -239,11 +239,6 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
         end
         Logger.info('server.lua', 'player' .. GetPlayerName(player) .. 'are now object:' .. objectt, "EVENT: AttachPlayerObject - 2")
     end
-end)
-
-
-AddEvent("OnPlayerDeath", function()
-   
 end)
 
 AddRemoteEvent("ServerPlayerDeath", function(player, instigator)
