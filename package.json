@@ -2,6 +2,7 @@
     "author": "OGK",
     "version": "0.1",
     "server_scripts": [
+        "configs/game.lua",
         "resources/libs/lodash.lua",
         "resources/libs/json.lua",
         "resources/libs/uuid.lua",
