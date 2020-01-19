@@ -64,3 +64,7 @@ AddRemoteEvent("SetObjectOutilned", function(objectId)
     AddPlayerChat("Set outlining for player : " .. objectId)
     SetObjectOutline(objectId, true)
 end)
+
+AddEvent("OnPlayerDeath", function(player, instigator)
+   CallRemoteEvent("ServerPlayerDeath", player, instigator)
+end)

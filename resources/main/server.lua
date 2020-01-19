@@ -241,7 +241,13 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     end
 end)
 
-AddEvent("OnPlayerDeath", function(player, instigator)
+
+AddEvent("OnPlayerDeath", function()
+   
+end)
+
+AddRemoteEvent("ServerPlayerDeath", function(player, instigator)
+
     if(game.state ~= "lobby") then
         print(game.propsTeams[player])
         if(game.propsTeams[player] ~= nil) then
@@ -298,6 +304,7 @@ AddEvent("OnPlayerDeath", function(player, instigator)
         players[player].attached = false
         players[player].object = nil
     end
+
 end)
 
 function PlayerJoinFunc(player)
