@@ -135,10 +135,10 @@ function StartTheGame()
                         NotifyPlayer(v, "Vous devez trouvez les props.", "HUNTER", 2000)
 
                          -- async hide for all players
-                        Delay(35000, function()
+                        Delay(5000, function()
                             for _, t in ipairs(game.propsTeams) do
                                 if(players[t].attached == true) then
-                                    CallRemoteEvent(v, "PlayerHider", t, true, objectt)
+                                    CallRemoteEvent(v, "PlayerHider", t, true, players[t].object)
                                 end
                             end
 
