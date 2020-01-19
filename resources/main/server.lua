@@ -243,12 +243,16 @@ end)
 
 AddEvent("OnPlayerDeath", function(player, instigator)
     if(game.state ~= "lobby") then
+        print(game.propsTeams[player])
         if(game.propsTeams[player] ~= nil) then
             game.killed_props = game.killed_props + 1
+            print('slt')
+            prin(#game.propsTeams, game.killed_props)
+            print(game.state)
             if(game.killed_props == #game.propsTeams and game.state == "game") then
                 game.state = "huntwin"
                 NotifyAllPlayers('Hunters wins !!!!!!!!', nil, 1000)
-        
+                prin(#game.propsTeams, game.killed_props)
                 game.huntersTeams = {}
                 game.propsTeams = {}
                 
