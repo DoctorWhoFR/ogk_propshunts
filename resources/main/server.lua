@@ -241,7 +241,7 @@ AddRemoteEvent("AttachPlayerObject", function(player, objectt)
     end
 end)
 
-AddRemoteEvent("ServerPlayerDeath", function(player, instigator)
+AddRemoteEvent("ServerPlayerDeath", function(player, p, instigator)
 
     if(game.state ~= "lobby") then
         print(game.propsTeams[player])
